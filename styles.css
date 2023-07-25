@@ -93,6 +93,13 @@
   cursor: pointer;
 }
 
+/* .like-button-img[data-isLiked='false'] {
+  background-image: url(./assets/images/like-not-active.svg);
+}
+.like-button-img[data-isLiked='true'] {
+  background-image: url(./assets/images/like-active.svg);
+} */
+
 .user-name {
   font-weight: 500;
 }
