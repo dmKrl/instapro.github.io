@@ -1,8 +1,9 @@
 import { renderHeaderComponent } from './header-component.js';
 import { renderUploadImageComponent } from './upload-image-component.js';
+import { addPost } from '../api.js';
 
 let imageUrl = '';
-export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
+export function renderAddPostPageComponent({ appEl }) {
   const render = () => {
     // TODO: Реализовать страницу добавления поста
     const appHtml = `
@@ -34,23 +35,28 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       element: document.querySelector('.header-container'),
     });
 
-    const uploadImageContainer = appEl.querySelector(".upload-image-container");
+    const uploadImageContainer = appEl.querySelector('.upload-image-container');
 
     if (uploadImageContainer) {
       renderUploadImageComponent({
-        element: appEl.querySelector(".upload-image-container"),
+        element: appEl.querySelector('.upload-image-container'),
         onImageUrlChange(newImageUrl) {
           imageUrl = newImageUrl;
         },
       });
     }
 
-
     document.getElementById('add-button').addEventListener('click', () => {
-      onAddPostClick({
-        description: 'Описание картинки',
-        imageUrl: 'https://image.png',
-      });
+      const inputValue = document.querySelector('.input').value;
+      console.log(inputValue);
+      addPost({
+        description: inputValue,
+        imageUrl,
+      })
+      // onAddPostClick({
+      //   description: inputValue,
+      //   imageUrl,
+      // });
     });
   };
 

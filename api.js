@@ -56,6 +56,19 @@ export function loginUser({ login, password }) {
   });
 }
 
+export function addPost({ description, imageUrl }) {
+  return fetch(baseHost + "/user-posts/", {
+    method: "POST",
+    body: JSON.stringify({
+      description,
+      imageUrl,
+    }),
+  }).then((response) => {
+    return response.json();
+  });
+}
+
+
 // Загружает картинку в облако, возвращает url загруженной картинки
 export function uploadImage({ file }) {
   const data = new FormData();
