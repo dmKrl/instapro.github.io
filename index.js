@@ -109,9 +109,10 @@ const renderApp = () => {
   if (page === ADD_POSTS_PAGE) {
     return renderAddPostPageComponent({
       appEl,
-      addPost({ description, imageUrl }) {
+      token: getToken(),
+      addPost({ description, imageUrl, token }) {
         // TODO: реализовать добавление поста в API
-        console.log("Добавляю пост...", { description, imageUrl });
+        console.log("Добавляю пост...", { description, imageUrl, token });
         goToPage(POSTS_PAGE);
       },
     });
