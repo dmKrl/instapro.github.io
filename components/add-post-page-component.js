@@ -1,6 +1,7 @@
 import { renderHeaderComponent } from './header-component.js';
+import { renderUploadImageComponent } from './upload-image-component.js';
 
-const imageUrl = '';
+let imageUrl = '';
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
     // TODO: Реализовать страницу добавления поста
@@ -13,38 +14,14 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
               </h3>
               
           <div class="form-inputs">
-            <div class="upload=image">
-              ${
-                imageUrl
-                  ? `
-                  <div class="file-upload-image-conrainer">
-                    <img class="file-upload-image" src="${imageUrl}">
-                    <button class="file-upload-remove-button button">Заменить фото</button>
-                  </div>
-                  `
-                  : `
-                    <label class="file-upload-label secondary-button">
-                        <input
-                          type="file"
-                          class="file-upload-input"
-                          style="display:none"
-                        />
-                        Выберите фото
-                    </label>
-              `
-              }
-            </div>
+          <div class="upload-image-container"></div>
                 <label>
-                " Опишите фотографию: "
+                 Опишите фотографию: 
                     <textarea
-                      type="file"
                       class="input textarea" 
-                      rows="4"
-                      style="display:none"
-                    />
-                    </textarea>
+                    /></textarea>
                 </label>
-                <button class="button" id="login-button">Добавить</button>
+                <button class="button" id="add-button">Добавить</button>
           </div>
         </div>
     </div>    
@@ -56,6 +33,18 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     renderHeaderComponent({
       element: document.querySelector('.header-container'),
     });
+
+    const uploadImageContainer = appEl.querySelector(".upload-image-container");
+
+    if (uploadImageContainer) {
+      renderUploadImageComponent({
+        element: appEl.querySelector(".upload-image-container"),
+        onImageUrlChange(newImageUrl) {
+          imageUrl = newImageUrl;
+        },
+      });
+    }
+
 
     document.getElementById('add-button').addEventListener('click', () => {
       onAddPostClick({
