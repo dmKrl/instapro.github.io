@@ -1,16 +1,25 @@
-import { USER_POSTS_PAGE } from "../routes.js";
-import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+import { USER_POSTS_PAGE } from '../routes.js';
+import { renderHeaderComponent } from './header-component.js';
+import { posts, goToPage } from '../index.js';
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
-  console.log("Актуальный список постов:", posts);
+  console.log('Актуальный список постов:', posts);
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
-  const postHtml = posts.map((post) => {
-    return `<div class="page-container">
+
+  if (posts.length === 0) {
+    const postHtml = `<div class="page-container">
+  <div class="header-container"></div>
+  </div>`;
+    appEl.innerHTML = postHtml;
+    console.log('Работает верхний блок')
+  } 
+  if (posts.length !== 0) {
+    const postHtml = posts.map((post) => {
+      return `<div class="page-container">
     <div class="header-container"></div>
     <ul class="posts">
       <li class="post">
@@ -40,16 +49,18 @@ export function renderPostsPageComponent({ appEl }) {
       <li class="post">
     </ul>
   </div>`;
-  })
+    });
+    appEl.innerHTML = postHtml;
+    console.log('Работает нижний блок')
 
-  appEl.innerHTML = postHtml;
+  }
 
   renderHeaderComponent({
-    element: document.querySelector(".header-container"),
+    element: document.querySelector('.header-container'),
   });
 
-  for (let userEl of document.querySelectorAll(".post-header")) {
-    userEl.addEventListener("click", () => {
+  for (let userEl of document.querySelectorAll('.post-header')) {
+    userEl.addEventListener('click', () => {
       goToPage(USER_POSTS_PAGE, {
         userId: userEl.dataset.userId,
       });
