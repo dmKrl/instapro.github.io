@@ -13,7 +13,6 @@ export function renderAddPostPageComponent({ appEl, token, onAddPostClick }) {
             <h3 class="form-title">
               Добавить пост
               </h3>
-              
           <div class="form-inputs">
           <div class="upload-image-container"></div>
                 <label>

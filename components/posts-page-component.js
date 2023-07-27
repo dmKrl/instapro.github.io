@@ -45,7 +45,6 @@ export function renderPostsPageComponent({ appEl }) {
           ${post.createdAt}
         </p>
       </li>
-      <li class="post">
     </ul>
   </div>`;
     });
@@ -61,6 +60,7 @@ export function renderPostsPageComponent({ appEl }) {
       goToPage(USER_POSTS_PAGE, {
         userId: userEl.dataset.userId,
       });
+      console.log(userEl.dataset.userId)
     });
   }
 }
