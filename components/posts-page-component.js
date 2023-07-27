@@ -15,7 +15,6 @@ export function renderPostsPageComponent({ appEl }) {
   <div class="header-container"></div>
   </div>`;
     appEl.innerHTML = postHtml;
-    console.log('Работает верхний блок')
   } 
   if (posts.length !== 0) {
     const postHtml = posts.map((post) => {
@@ -51,8 +50,6 @@ export function renderPostsPageComponent({ appEl }) {
   </div>`;
     });
     appEl.innerHTML = postHtml;
-    console.log('Работает нижний блок')
-
   }
 
   renderHeaderComponent({

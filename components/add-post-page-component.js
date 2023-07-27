@@ -3,7 +3,7 @@ import { renderUploadImageComponent } from './upload-image-component.js';
 import { addPost } from '../api.js';
 
 let imageUrl = '';
-export function renderAddPostPageComponent({ appEl, token  }) {
+export function renderAddPostPageComponent({ appEl, token, onAddPostClick }) {
   const render = () => {
     // TODO: Реализовать страницу добавления поста
     const appHtml = `
@@ -53,11 +53,11 @@ export function renderAddPostPageComponent({ appEl, token  }) {
         description: inputValue,
         imageUrl,
         token,
-      })
-      // onAddPostClick({
-      //   description: inputValue,
-      //   imageUrl,
-      // });
+      });
+      onAddPostClick({
+        description: inputValue,
+        imageUrl,
+      });
     });
   };
 
