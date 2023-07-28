@@ -59,7 +59,6 @@ export const goToPage = (newPage, data) => {
         .then((newPosts) => {
           page = POSTS_PAGE;
           posts = newPosts;
-          console.log(posts);
           renderApp();
         })
         .catch((error) => {

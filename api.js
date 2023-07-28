@@ -150,3 +150,23 @@ export function postTodoDisLike({ id, token }) {
       alert(error.message)
     });
 }
+
+
+export function deletePost({ id, token }) {
+  return fetch(postsHost + `/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        throw new Error('Нет авторизации');
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error.message);
+      alert(error.message)
+    });
+}

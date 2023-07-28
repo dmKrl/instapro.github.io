@@ -4,13 +4,8 @@ import { posts, goToPage } from '../index.js';
 import { postTodoLike, postTodoDisLike } from '../api.js';
 
 export function renderPostsPageComponent({ appEl, token }) {
-  // TODO: реализовать рендер постов из api
     console.log('Актуальный список постов:', posts);
-    /**
-     * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
-     * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
-     */
-
+    
     if (posts.length === 0) {
       const postHtml = `<div class="page-container">
     <div class="header-container"></div>
