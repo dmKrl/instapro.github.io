@@ -19,9 +19,7 @@ export function renderPostsPageComponent({ appEl, token }) {
     }
     if (posts.length !== 0) {
       const postHtml = posts.map((post) => {
-        return `<div class="page-container">
-      <div class="header-container"></div>
-      <ul class="posts">
+        return `
         <li class="post">
           <div class="post-header" data-user-id=${post.user.id}>
               <img src=${post.user.imageUrl} class="post-header__user-image">
@@ -51,11 +49,15 @@ export function renderPostsPageComponent({ appEl, token }) {
           <p class="post-date">
             ${post.createdAt}
           </p>
-        </li>
-      </ul>
-    </div>`;
+        </li>`;
       });
-      appEl.innerHTML = postHtml;
+      const appHtml = `<div class="page-container">
+      <div class="header-container"></div>
+      <ul class="posts">
+        ${postHtml}
+      </ul>
+    </div>`
+      appEl.innerHTML = appHtml;
     }
 
     renderHeaderComponent({

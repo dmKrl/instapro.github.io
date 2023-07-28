@@ -6,14 +6,7 @@ import { postTodoLike, postTodoDisLike } from '../api.js';
 export function renderPostsUserPageComponent({ appEl, posts, token }) {
   console.log('Актуальный список постов:', posts);
   const postHtml = posts.map((post) => {
-    return `<div class="page-container">
-      <div class="header-container"></div>
-      <ul class="posts">
-        <li class="post">
-          <div class="post-header" data-user-id=${post.user.id}>
-              <img src=${post.user.imageUrl} class="post-header__user-image">
-              <p class="post-header__user-name">${post.user.name}</p>
-          </div>
+    return `<li class="post">
           <div class="post-image-container">
             <img class="post-image" src=${post.imageUrl}>
           </div>
@@ -38,11 +31,23 @@ export function renderPostsUserPageComponent({ appEl, posts, token }) {
           <p class="post-date">
             ${post.createdAt}
           </p>
-        </li>
+        </li>`;
+  });
+  const appHtml = `<div class="page-container">
+      <div class="header-container"></div>
+      <div class="post-header" data-user-id=${posts[0].user.id}>
+      <img src=${posts[0].user.imageUrl} class="post-header__user-image-item">
+      <div class="post-header-text">
+          <p class="post-header__user-name">${posts[0].user.name}</p>
+          <p class="post-header__user-name">Количество постов: ${posts.length}</p>
+      </div>
+  </div>
+      <ul class="posts">
+      ${postHtml}
       </ul>
     </div>`;
-  });
-  appEl.innerHTML = postHtml;
+  appEl.innerHTML = appHtml;
+
   renderHeaderComponent({
     element: document.querySelector('.header-container'),
   });
