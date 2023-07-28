@@ -59,6 +59,7 @@ export const goToPage = (newPage, data) => {
         .then((newPosts) => {
           page = POSTS_PAGE;
           posts = newPosts;
+          console.log(posts);
           renderApp();
         })
         .catch((error) => {
@@ -128,13 +129,15 @@ const renderApp = () => {
   }
 
   if (page === POSTS_PAGE) {
-    return renderPostsPageComponent({
+    renderPostsPageComponent({
       appEl,
+      token: getToken(),
     });
+    return;
   }
 
   if (page === USER_POSTS_PAGE) {
-    renderPostsUserPageComponent({ appEl, posts });
+    renderPostsUserPageComponent({ appEl, posts, token: getToken() });
     return;
   }
 };

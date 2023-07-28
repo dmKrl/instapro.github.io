@@ -1,5 +1,6 @@
 import { renderHeaderComponent } from './header-component.js';
 import { renderUploadImageComponent } from './upload-image-component.js';
+import { renderPostsPageComponent } from './posts-page-component.js';
 import { addPost } from '../api.js';
 
 let imageUrl = '';
@@ -52,11 +53,14 @@ export function renderAddPostPageComponent({ appEl, token, onAddPostClick }) {
         description: inputValue,
         imageUrl,
         token,
-      });
-      onAddPostClick({
-        description: inputValue,
-        imageUrl,
-      });
+      }).then(() => {
+        renderPostsPageComponent({ appEl })
+        onAddPostClick({
+          description: inputValue,
+          imageUrl,
+        });
+      })
+
     });
   };
 
