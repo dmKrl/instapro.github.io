@@ -5,13 +5,6 @@ import { postTodoLike, postTodoDisLike } from '../api.js';
 import formatDistance from 'date-fns/formatDistance';
 import { ru } from 'date-fns/locale';
 
-const formatDis = formatDistance(
-  new Date(),
-  new Date(2015, 1, 1),
-  {locale: ru}
-)
-console.log(formatDis)
-
 export function renderPostsPageComponent({ appEl, token }) {
   console.log('Актуальный список постов:', posts);
 
