@@ -2,18 +2,21 @@ import { renderHeaderComponent } from './header-component.js';
 import { goToPage } from '../index.js';
 import { POSTS_PAGE } from '../routes.js';
 import { postTodoLike, postTodoDisLike } from '../api.js';
+import formatDistance from 'date-fns/formatDistance';
+import { ru } from 'date-fns/locale';
 
 export function renderPostsUserPageComponent({ appEl, posts, token }) {
   console.log('Актуальный список постов:', posts);
-  const postHtml = posts.map((post) => {
-    return `<li class="post">
+  const postHtml = posts
+    .map((post) => {
+      return `<li class="post">
           <div class="post-image-container">
             <img class="post-image" src=${post.imageUrl}>
           </div>
           <div class="post-likes">
             <button data-post-id=${post.id} class="like-button" data-is-Liked=${
-      post.isLiked
-    }>
+        post.isLiked
+      }>
             ${
               post.isLiked
                 ? `<img src="./assets/images/like-active.svg" data-is-Liked=${post.isLiked} class="like-button-img" data-post-id=${post.id}>`
@@ -29,10 +32,11 @@ export function renderPostsUserPageComponent({ appEl, posts, token }) {
             ${post.description}
           </p>
           <p class="post-date">
-            ${post.createdAt}
+          ${formatDistance(new Date(), new Date(post.createdAt), {locale: ru})} назад
           </p>
         </li>`;
-  });
+    })
+    .join('');
   const appHtml = `<div class="page-container">
       <div class="header-container"></div>
       <div class="post-header" data-user-id=${posts[0].user.id}>
