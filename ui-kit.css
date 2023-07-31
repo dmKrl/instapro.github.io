@@ -63,6 +63,11 @@ p {
   cursor: pointer;
 }
 
+.link-button:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
 .button:hover {
   background-color: #6d73ff;
 }

@@ -2,27 +2,22 @@ import { POSTS_PAGE, USER_POSTS_PAGE } from '../routes.js';
 import { renderHeaderComponent } from './header-component.js';
 import { posts, goToPage } from '../index.js';
 import { postTodoLike, postTodoDisLike } from '../api.js';
+import formatDistance from 'date-fns/formatDistance';
+import { ru } from 'date-fns/locale';
 
 export function renderPostsPageComponent({ appEl, token }) {
-  // TODO: реализовать рендер постов из api
-    console.log('Актуальный список постов:', posts);
-    /**
-     * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
-     * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
-     */
+  console.log('Актуальный список постов:', posts);
 
-    if (posts.length === 0) {
-      const postHtml = `<div class="page-container">
-    <div class="header-container"></div>
+  if (posts.length === 0) {
+    const postHtml = `<div class="page-container">
+    <div class="header-container"></div>,
     </div>`;
-      appEl.innerHTML = postHtml;
-    }
-    if (posts.length !== 0) {
-      const postHtml = posts.map((post) => {
-        return `<div class="page-container">
-      <div class="header-container"></div>
-      <ul class="posts">
-        <li class="post">
+    appEl.innerHTML = postHtml;
+  }
+  if (posts.length !== 0) {
+    const postHtml = posts
+      .map((post) => {
+        return ` <li class="post">
           <div class="post-header" data-user-id=${post.user.id}>
               <img src=${post.user.imageUrl} class="post-header__user-image">
               <p class="post-header__user-name">${post.user.name}</p>
@@ -49,42 +44,47 @@ export function renderPostsPageComponent({ appEl, token }) {
             ${post.description}
           </p>
           <p class="post-date">
-            ${post.createdAt}
+            ${formatDistance(new Date(), new Date(post.createdAt), {locale: ru})} назад
           </p>
-        </li>
+        </li>`;
+      })
+      .join('');
+    const appHtml = `<div class="page-container">
+      <div class="header-container"></div>
+      <ul class="posts">
+        ${postHtml}
       </ul>
     </div>`;
-      });
-      appEl.innerHTML = postHtml;
-    }
+    appEl.innerHTML = appHtml;
+  }
 
-    renderHeaderComponent({
-      element: document.querySelector('.header-container'),
+  renderHeaderComponent({
+    element: document.querySelector('.header-container'),
+  });
+
+  for (let userEl of document.querySelectorAll('.post-header')) {
+    userEl.addEventListener('click', () => {
+      goToPage(USER_POSTS_PAGE, {
+        userId: userEl.dataset.userId,
+      });
+      console.log(userEl.dataset.userId);
     });
+  }
 
-    for (let userEl of document.querySelectorAll('.post-header')) {
-      userEl.addEventListener('click', () => {
-        goToPage(USER_POSTS_PAGE, {
-          userId: userEl.dataset.userId,
+  const buttonLike = document.querySelectorAll('.like-button');
+  for (const buttonEl of buttonLike) {
+    buttonEl.addEventListener('click', () => {
+      const id = buttonEl.dataset.postId;
+      if (buttonEl.dataset.isLiked === 'false') {
+        postTodoLike({ id, token }).then(() => {
+          goToPage(POSTS_PAGE);
         });
-        console.log(userEl.dataset.userId);
-      });
-    }
-
-    const buttonLike = document.querySelectorAll('.like-button');
-    for (const buttonEl of buttonLike) {
-      buttonEl.addEventListener('click', () => {
-        const id = buttonEl.dataset.postId;
-        if (buttonEl.dataset.isLiked === 'false') {
-          postTodoLike({ id, token }).then(() => {
-            goToPage(POSTS_PAGE);
-          });
-        }
-        if (buttonEl.dataset.isLiked === 'true') {
-          postTodoDisLike({ id, token }).then(() => {
-            goToPage(POSTS_PAGE);
-          });
-        }
-      });
-    }
+      }
+      if (buttonEl.dataset.isLiked === 'true') {
+        postTodoDisLike({ id, token }).then(() => {
+          goToPage(POSTS_PAGE);
+        });
+      }
+    });
+  }
 }
